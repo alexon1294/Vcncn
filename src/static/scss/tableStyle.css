@@ -1,0 +1,165 @@
+body {
+    background: #777677;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,0) 0%, rgba(33,131,108,0) 0%, rgba(39,116,115,0.304359243697479) 0%, rgba(83,147,166,0.10828081232492992) 0%, rgba(190,0,255,0.03545168067226889) 100%);
+
+}
+
+h1 {
+    color: #0d0153;
+    font-size: 1.4em;
+    margin-top: 0.7em;
+}
+.container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.4px);
+    -webkit-backdrop-filter: blur(4.4px);
+    border: 1px solid rgba(255, 255, 255, 0.61);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.4px);
+    -webkit-backdrop-filter: blur(4.4px);
+    border: 1px solid rgba(255, 255, 255, 0.61);
+
+    max-width:90em;
+    margin-bottom: 3em;
+    margin-top: 3em;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+.principal {
+    display: flex;
+    flex-flow: column;
+}
+.section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.15em solid rgba(238, 106, 255, 0.1);
+    border-radius: 0.4em;
+}
+.h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.centered {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+caption {
+    font-size: 1em;
+    font-weight: bold;
+    color: #ac61b9;
+    opacity: 0.7;
+}
+.img-fluid {
+    margin: 1.5em 0 1.5em 1.5em;
+    max-width: 350px;
+    height: 100px;
+}
+.form {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    gap: 1em;
+    margin-right: 10em;
+}
+.btn_print {
+    min-width: 13em;
+}
+.btn_edit {
+    min-width: 6em;
+}
+.files {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: 25em;
+    gap: 1em;
+}
+.file-panel {
+    background-color: #f8f6ff;
+    display: inline-flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    margin: 3em 0;
+    padding: 1.4em;
+}
+.file-panel form {
+    
+}
+.file-item {
+    gap: 0.5em;
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: 15em;
+    align-items: center;
+    justify-content: center;
+}
+.file-panel form {
+    align-self: center;
+}
+.glass {
+    background: rgba(230, 246, 228, 0.19);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(1.9px);
+    -webkit-backdrop-filter: blur(1.9px);
+    border: 1px solid rgba(230, 246, 228, 1);
+}
+.btn-subir {
+    width: 5em;
+
+}
+.btn-logout{
+    
+}
+label {
+    margin-bottom: 1.6em;
+}
+.delete-generate-excel {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cerrar-sesion {
+    margin-right: 1.5em;
+}
+
+.fa-file-excel, .fa-file-pdf {
+    font-size: 2.2em;
+}
+
+.lotes {
+    display: flex;
+    align-items: flex-start;
+    flex-flow: row nowrap;
+}
+.lotes > * {
+    margin-right: 0.9em;
+}
+.aplicantes {
+    display: flex;
+    align-items: flex-start;
+    flex-flow: row nowrap;
+}
+.aplicantes > * {
+    margin-right: 0.9em;
+}
+
+.lote__input, .lote__select, .aplicantes__input, .aplicantes__select, .lote-covid__input, .lote-covid__select{
+    width: 17em;
+}
+.lotes-aplicantes {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: column;
+    margin-top: 3em;
+}
+
+

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprobante</title>
+    <!-- Rutas internas -->
+    <link rel="stylesheet" href="static/scss/app.css">
+    <link rel="stylesheet" href="static/scss/comprobante.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+
+</head>
+<body>
+    <a class="boton-regresar" href="/table">Regresar</a>
+    <header>
+        Puedes modificar los campos dando click en ellos.
+    </header>
+    <div id="toPrint">
+        <article class="comprobante_COVID">
+            <div class="fila1">
+                <img class="img-fluid logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="">
+                <div class="titulos">
+                    <h5 class="h5">Comprobante de aplicación de vacuna</h5>
+                    <span class="vacuna-title">SARS-CoV2 (COVID-19)</span>
+                </div>
+            </div>
+            <div class="fila2">
+                <img class="img-fluid pfizer" src="{{ url_for('static', filename='img/pfizer.png') }}" alt="">
+                <div class="inputs">
+                    <div class="estimado-input">
+                        <label for="estimado">Estimado(a): </label>
+                        <input type="text" name="estimado" id="" value="{{ nombre }} {{ a_paterno }} {{ a_materno }}">
+                    </div>
+                    <div class="fechaVacunacion-input">
+                        <label for="estimado">Fecha de <br> vacunación:</label>
+                        <input type="text" name="fechaVacunacion" id="" value="{{ fecha_generacion_comprobante }}">
+                    </div>
+                </div>
+            </div>
+            <div class="sections">
+                <div class="section1">
+                    <div class="borde">
+                    </div>
+                    <div class="lote-caducidad">
+                        <div class="lote-input">
+                            <label for="lote">Lote: </label>
+                            <input type="text" name="lote" id="" value="{{ lote }}">
+                        </div>
+                        <div class="caducidad">
+                            <span>Caducidad:</span> 02/2024
+                        </div>
+                    </div>
+                </div>
+                <div class="section2">
+                    <div class="text" style="text-align: justify;">
+                        Usted acaba de recibir la vacuna COMIRNATY® desarrollada por
+                        BioNTech/Pfizer. Esta vacuna ha sido actualizada específicamente
+                        para hacer frente a la variante ómicron XBB.1.5 del virus SARS-CoV-2,
+                        siguiendo las recomendaciones de la Organización Mundial de la
+                        Salud (OMS).</span>
+                        <br>
+                        <br>
+                        Es importante destacar que, como con todas las vacunas, pueden
+                        surgir efectos secundarios. Sin embargo, la gran mayoría de estos
+                        efectos son leves y de corta duración. Los síntomas más comunes
+                        incluyen dolor o inflamación en el lugar de la inyección, fatiga, dolor
+                        de cabeza, dolor muscular, escalofríos, dolor en las articulaciones y
+                        fiebre.</span>
+                    </div>
+                    <div class="aplico-input">
+                        <label for="aplico">Aplicó</label>
+                        <input type="text" name="aplico" id="" value="{{ nombre_completo_aplicante }}">
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="comprobante_influenza">
+            <div class="fila1">
+                <img class="img-fluid logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="">
+                <div class="titulos">
+                    <h5 class="h5">Comprobante de aplicación de vacuna</h5>
+                    <span class="vacuna-title">INFLUENZA</span>
+                </div>
+            </div>
+            <div class="fila2">
+                <img class="img-fluid pfizer" src="{{ url_for('static', filename='img/sanofi_pasteur.png') }}" alt="">
+                <div class="inputs">
+                    <div class="estimado-input">
+                        <label for="estimado">Estimado(a): </label>
+                        <input type="text" name="estimado" id="" value="{{ nombre }} {{ a_paterno }} {{ a_materno }}">
+                    </div>
+                    <div class="fechaVacunacion-input">
+                        <label for="estimado">Fecha de <br> vacunación:</label>
+                        <input type="text" name="fechaVacunacion" id="" value="{{ fecha_generacion_comprobante }}">
+                    </div>
+                </div>
+            </div>
+            <div class="sections">
+                <div class="section1">
+                    <div class="borde">
+                    </div>
+                    <div class="lote-caducidad">
+                        <div class="lote-input">
+                            <label for="lote">Lote: </label>
+                            <input type="text" name="lote" id="" value="{{ lote }}">
+                        </div>
+                        <div class="caducidad">
+                            <span>Caducidad:</span> 02/2024
+                        </div>
+                    </div>
+                </div>
+                <div class="section2">
+                    <div class="text" style="text-align: justify;">
+                        Usted recibió la vacuna VAXIGRIP TETRA®, una vacuna 
+                        tetravalente contra la gripe A (subtipos A(H1N1) y A(H3N2)) y la gripe B, 
+                        con recomendación de aplicación anual. 
+                        <br>
+                        Las reacciones adversas son usualmente leves y se resuelven en 1 a 3 días, 
+                        siendo el dolor en el sitio de inyección el más común. En adultos, 
+                        las reacciones frecuentes incluyen cefalea, 
+                        mialgia y malestar general, mientras que en niños de 9 a 17 años, 
+                        se observan comúnmente mialgia, cefalea y malestar general. 
+                    </div>
+                    <div class="aplico-input">
+                        <label for="aplico">Aplicó</label>
+                        <input type="text" name="aplico" id="" value="{{ nombre_completo_aplicante }}">
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+    <button class="download" id="downloadButton" onclick="generatePDF()">Descargar</button>
+    <script>
+        function descargarComprobante() {
+            // Redireccionar al usuario a la URL deseada
+            window.location.href = '/comprobante/descargar';
+        }
+        function generatePDF() {
+            var doc = new jsPDF('p', 'pt', 'letter');
+            var margin = 10;
+
+            html2canvas(document.getElementById('toPrint'), {
+                scale: 4
+            }).then(function(canvas) {
+                var imgData = canvas.toDataURL('image/jpeg');
+
+                var imgWidth = doc.internal.pageSize.width - margin * 2;
+                var imgHeight = canvas.height * imgWidth / canvas.width;
+
+                doc.addImage(imgData, 'JPEG', margin, margin, imgWidth, imgHeight);
+                doc.save('comprobante.pdf');
+            });
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+</body>
+</html>

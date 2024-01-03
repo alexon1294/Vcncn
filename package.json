@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "boostrap": "^2.0.0",
+    "bootstrap": "^5.3.2",
+    "jszip": "^3.10.1"
+  },
+  "name": "flask-login-mysql",
+  "description": "Tutorial para autenticación de usuarios utilizando Python, Flask, flask-login y MySQL.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

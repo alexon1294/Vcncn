@@ -1,0 +1,220 @@
+* {
+    font-family: var(--tipo-principal);
+    color: rgb(0, 0, 0);
+    
+}
+body {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+}
+header {
+    margin-bottom: 1em;
+    font-size: 1.6em;
+    font-weight: bold;
+    color: rgb(91, 3, 133);
+}
+.sections {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
+}
+
+.article {
+    border: 0.4em solid rgb(52, 3, 143);
+    border-radius: 2em;
+    padding: 1em;
+}
+.borde {
+    border: 0.35em dotted rgb(52, 3, 143);
+    border-radius: 1em;
+    padding: 1em;
+    width: 9.6em;
+    height: 11.5em;
+    margin-left: 0.7em;
+}
+.text {
+    font-size: 13px;
+    width: 37em;
+    line-height: 1.4;
+    margin-right: 0.3em;
+}
+#whatToPrint{
+    width: 715px;
+}
+.logo {
+    width: 160px;
+    margin-right: 3em;
+}
+.pfizer {
+    width: 62px;
+    margin-right: 1em;
+    margin-left: 2.7em;
+}
+
+.titulos {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+.fila1 {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1em;
+}
+.fila2 {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+.inputs {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+}
+.h1 {
+
+}
+.vacuna-title {
+    font-size: 0.8em;
+    font-weight: bold;
+}
+.h5  {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+.input, .estimado-input, .fechaVacunacion-input {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+}
+.fechaVacunacion-input {
+    margin-bottom: 0.5em;
+    margin-left: 0.5em;
+}
+.aplico-input {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.1em;
+}
+.lote-caducidad {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+.lote-input {
+    display: flex;
+    flex-flow: row;
+    margin-top: 0.2em;
+    color: rgb(27, 27, 146);
+}
+.caducidad {
+    margin-top: 0.2em;
+    color: rgb(27, 27, 146);
+}
+
+/* label */
+.aplico-input label, .estimado-input label,
+.fechaVacunacion-input label, .lote-input label, .caducidad span {
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+/* inputs */
+.aplico-input input[type="text"] {
+    border: none;
+    border-bottom: 0.17em solid black;
+    font-size: 13px;
+    width: 24em;
+    text-align: center;
+    font-weight: bold;
+
+    height: 2.4em;
+}
+.lote-input input[type="text"] {
+    border: none;
+    border-bottom: 0.17em solid black;
+    font-size: 13px;
+    width: 7em;
+    text-align: center;
+    margin-left: 0.3em;
+    font-weight: bold;
+
+    height: 2.4em;
+}
+.fechaVacunacion-input input[type="text"] {
+    border: none;
+    border-bottom: 0.17em solid black;
+    font-size: 13px;
+    width: auto;
+    max-width: 8.7em;
+    text-align: center;
+    margin-top: 1em;
+    margin-left: 0.3em;
+    font-weight: bold;
+
+    height: 2.4em;
+}
+.estimado-input input[type="text"] {
+    border: none;
+    border-bottom: 0.17em solid black;
+    font-size: 13px;
+    height: 2em;
+    width: 21em;
+    text-align: center;
+    margin-left: 0.3em;
+    font-weight: bold;
+
+    height: 2.4em;
+}
+/* boton download */
+.download {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    font-size: 1.6em;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    border-radius: 0.3em;
+    padding: 0.3em 2.5em 0.3em 2.5em;
+    background-color: rgb(38, 1, 133);
+    transition: background-color 0.3s ease;
+}
+.download:hover {
+    background-color: rgb(20, 0, 71);
+}
+
+/* boton regresar */
+
+.boton-regresar {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    background-color: red;
+    border-radius: 5px;
+    transition: background-color 01.5s;
+    align-self: flex-end;
+    margin-right: 4em;
+    margin-bottom: 2em;
+    margin-top: 2em;
+}
+  
+.boton-regresar:hover {
+    background-color: rgb(173, 21, 21);
+}
+
+.comprobante_influenza {
+    margin-top: 5em;
+}

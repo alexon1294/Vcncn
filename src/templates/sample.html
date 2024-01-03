@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+    <html lang="ja">
+    <head>
+    <meta charset="utf-8"/>
+    </head>
+    <style>
+    * {
+    font-family: var(--tipo-principal);
+    color: rgb(0, 0, 0);
+    
+}
+body {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+header {
+    margin-bottom: 3em;
+    font-size: 1.6em;
+    font-weight: bold;
+    color: rgb(91, 3, 133);
+}
+.sections {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
+}
+
+.article {
+    border: 0.4em solid rgb(52, 3, 143);
+    border-radius: 2em;
+    padding: 1em;
+}
+.borde {
+    border: 0.35em dotted rgb(52, 3, 143);
+    border-radius: 1em;
+    padding: 1em;
+    width: 9.6em;
+    height: 11.5em;
+}
+.text {
+    font-size: 13px;
+    width: 38.5em;
+    line-height: 1.4;
+}
+#whatToPrint{
+    width: 715px;
+}
+.logo {
+    width: 160px;
+    margin-right: 3em;
+}
+.pfizer {
+    width: 62px;
+    margin-right: 1em;
+    margin-left: 2.7em;
+}
+
+.titulos {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+.fila1 {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1em;
+}
+.fila2 {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+.inputs {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+}
+.h1 {
+
+}
+.vacuna-title {
+    font-size: 0.8em;
+    font-weight: bold;
+}
+.h5  {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+.input, .input-estimado, .fechaVacunacion{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+}
+.fechaVacunacion {
+    margin-bottom: 0.5em;
+    margin-left: 0.5em;
+}
+.aplico-input {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.1em;
+}
+.lote-caducidad {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+.lote {
+    display: flex;
+    flex-flow: row;
+    margin-top: 0.65em;
+    color: rgb(27, 27, 146);
+}
+.caducidad {
+    margin-top: 0.65em;
+    color: rgb(27, 27, 146);
+}
+
+/* label */
+.aplico-input label, .input-estimado label,
+.fechaVacunacion label, .lote label, .caducidad span {
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+/* inputs */
+.aplico-input input[type="text"] {
+    border: none;
+    border-bottom: 0.17em solid black;
+    font-size: 13px;
+    width: 24em;
+    text-align: center;
+    font-weight: bold;
+}
+.lote input[type="text"] {
+    border: none;
+    border-bottom: 0.17em solid black;
+    font-size: 13px;
+    height: 1.4em;
+    width: 5em;
+    text-align: center;
+    margin-left: 0.3em;
+    font-weight: bold;
+}
+.fechaVacunacion input[type="text"] {
+    border: none;
+    border-bottom: 0.17em solid black;
+    font-size: 13px;
+    height: 1.4em;
+    width: auto;
+    max-width: 8em;
+    text-align: center;
+    margin-top: 1em;
+    margin-left: 0.3em;
+    font-weight: bold;
+}
+.input-estimado input[type="text"] {
+    border: none;
+    border-bottom: 0.17em solid black;
+    font-size: 13px;
+    height: 1.4em;
+    width: 21em;
+    text-align: center;
+    margin-left: 0.3em;
+    font-weight: bold;
+}
+
+/* boton download */
+.download {
+    margin-top: 3em;
+    font-size: 1.6em;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    border-radius: 0.3em;
+    padding: 0.3em 2.5em 0.3em 2.5em;
+    background-color: rgb(38, 1, 133);
+    transition: background-color 0.3s ease;
+}
+.download:hover {
+    background-color: rgb(20, 0, 71);
+}
+</style><body>
+    <header>
+        Puedes modificar los campos dando click en ellos.
+    </header>
+    <div id="whatToPrint">
+        <article class="article">
+            <div class="fila1">
+                <img class="img-fluid logo" src="/static/img/logo.png" alt="">
+                <div class="titulos">
+                    <h5 class="h5">Comprobante de aplicación de vacuna</h5>
+                    <span class="vacuna-title">SARS-CoV2 (COVID-19)</span>
+                </div>
+            </div>
+            <div class="fila2">
+                <img class="img-fluid pfizer" src="/static/img/pfizer.png" alt="">
+                <div class="inputs">
+                    <div class="input-estimado">
+                        <label for="estimado">Estimado(a): </label>
+                        <input type="text" name="estimado" id="" value="Ale">
+                    </div>
+                    <div class="fechaVacunacion">
+                        <label for="estimado">Fecha de <br> vacunación:</label>
+                        <input type="text" name="fechaVacunacion" id="" value="2023">
+                    </div>
+                </div>
+            </div>
+            <div class="sections">
+                <div class="section1">
+                    <div class="borde">
+                    </div>
+                    <div class="lote-caducidad">
+                        <div class="lote">
+                            <label for="lote">Lote: </label>
+                            <input type="text" name="lote" id="" value="">
+                        </div>
+                        <div class="caducidad">
+                            <span>Caducidad:</span> 02/2024
+                        </div>
+                    </div>
+                </div>
+                <div class="section2">
+                    <div class="text" style="text-align: justify;">
+                        Usted acaba de recibir la vacuna COMIRNATY® desarrollada por
+                        BioNTech/Pfizer. Esta vacuna ha sido actualizada específicamente
+                        para hacer frente a la variante ómicron XBB.1.5 del virus SARS-CoV-2,
+                        siguiendo las recomendaciones de la Organización Mundial de la
+                        Salud (OMS).</span>
+                        <br>
+                        <br>
+                        Es importante destacar que, como con todas las vacunas, pueden
+                        surgir efectos secundarios. Sin embargo, la gran mayoría de estos
+                        efectos son leves y de corta duración. Los síntomas más comunes
+                        incluyen dolor o inflamación en el lugar de la inyección, fatiga, dolor
+                        de cabeza, dolor muscular, escalofríos, dolor en las articulaciones y
+                        fiebre.</span>
+                    </div>
+                    <div class="aplico-input">
+                        <label for="aplico">Aplicó</label>
+                        <input type="text" name="aplico" id="">
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+    <button class="download" id="downloadButton" onclick="descargarComprobante()">Descargar</button>
+    <script>
+        function descargarComprobante() {
+            // Redireccionar al usuario a la URL deseada
+            window.location.href = '/comprobante/descargar';
+        }
+    </script>
+    <!-- <script>
+        async function generatePDF() {
+            document.getElementById("downloadButton").innerHTML = "Descargando, por favor espere...";
+
+            //Downloading
+            var downloading = document.getElementById("whatToPrint");
+
+            var doc = new jsPDF('l', 'pt');
+
+            await html2canvas(downloading, {
+                //allowTaint: true,
+                //useCORS: true,
+                width: 715
+            }).then((canvas) => {
+                var imgData = canvas.toDataURL("image/png");
+
+                // Agregar la imagen al PDF con las dimensiones del canvas
+                doc.addImage(imgData, 'PNG', 0, 0, 715, 426);
+            })
+
+            doc.save("Document.pdf");
+
+            //End of downloading
+
+            document.getElementById("downloadButton").innerHTML = "Descargar";
+        }
+    </script> -->
+</body>
+</html>

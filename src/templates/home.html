@@ -1,0 +1,18 @@
+{% extends './base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='../static/scss/home.css') }}" />
+{% endblock %}
+
+{% block body %}
+<div class="container">
+        <h1>Bienvenido, {{ fullname }}</h1>
+        <a class="btn-register-table btn btn-primary" href="/table">Ver tabla de registros</a>
+
+        <a class="btn-logout btn btn-danger" href="/logout">Cerrar sesión</a>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,36 @@
+{% extends './base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='scss/login.css') }}">
+{% endblock %}
+
+{% block body %}
+<form class="form-signin" action="/login" method="POST">
+    <img class="img-fluid" src="{{ url_for('static', filename='img/logo.png') }}" alt="">
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <br />
+    <div class="alert alert-primary alert-dismissible" role="alert">
+        <strong>{{ messages[0] }}</strong> {# Mostrar solo el primer mensaje flash #}
+        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <h1 class="h3 mb-3 fw-normal"><strong>Inicia sesión</strong></h1>
+
+    <div class="form-floating">
+        <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+        <label for="username">Username</label>
+    </div>
+    <div class="form-floating mt-2">
+        <input type="password" class="form-control" name="password" placeholder="Password">
+        <label for="password">Password</label>
+    </div>
+    <button class="w-100 btn btn-lg btn-success" type="submit">Sign in</button>
+</form>
+<script src="{{ url_for('static', filename='../static/js/login.js') }}"></script>
+{% endblock %}

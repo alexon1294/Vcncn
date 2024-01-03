@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario de Vacunación</title>
+    <style>
+        
+    </style>
+
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+   integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <!-- <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/scss/registro.css') }}" />
+
+</head>
+
+    <body>
+         <img class="logo" src="{{ url_for('static', filename='../static/img/logo.png') }}" alt="logo Medimanage Research">
+         <h1 class="h1 mb-5 text-primary"><strong>Cuestionario vacunación</strong></h1>
+         <div class="m_text-center eleccion-vacuna bg-dark text-light" id="eleccion-vacuna">
+            <div class="vacuna-que-desea-aplicarse">
+               <label class="m_form-label m_text-center text-warning"><strong>¿Qué vacuna desea aplicarse?</strong></label>
+               <div class="form-check mb-3">
+                  <input class="form-check-input" type="checkbox" id="m_vacInfluenza" value="influenza">
+                  <label class="form-check-label" for="m_vacInfluenza"><strong>Influenza - Vaxigrip®</strong></label>
+               </div>
+               <div class="row mb-3 consideraciones-covid" id="influenza">
+                  <h3 class="h3"><strong>Consideraciones para vacuna contra Influenza:</strong></h3>
+                  <ul>
+                        <li>No deben vacunarse a bebés menores de 6 meses.</li>
+                        <li>Si tienes antecedentes de un evento de alergia al huevo o a una dosis previa de vacuna contra influenza.</li>
+                        <li>Si presentas fiebre mayor o igual a 38.5ºC.</li>
+                        <li>Si tienes antecedente de Síndrome de Guillain Barré (enfermedad que afecta el sistema nervioso y que ocasiona debilidad muscular, las causas son muchas).</li>
+                  </ul>
+               </div>
+               <div class="form-check mb-3">
+                  <input class="form-check-input" type="checkbox" id="m_vacSARS" value="sars-cov2">
+                  <label class="form-check-label" for="m_vacSARS"><strong>SARS CoV2 - COMIRNATY®</strong></label>
+               </div>
+               <div class="row mb-3 consideraciones-covid" id="covid">
+                  <h3 class="h3"><strong>Consideraciones para vacuna contra COVID-19:</strong></h3>
+                  <ul>
+                        <li>No haber tenido reacciones alérgicas después de vacuna contra COVID-19 previamente.</li>
+                        <li>Si presentas fiebre mayor o igual a 38.5ºC, o alguna infección respiratoria al momento de vacunación.</li>
+                        <li>Inmundeficiencia por consumo de medicamentos o enfermedad secundaria.</li>
+                        <li>Si tienes antecedente de Sí­ndrome de Guillain Barré (enfermedad que afecta el sistema nervioso y que ocasiona debilidad muscular, las causas son muchas).</li>
+                  </ul>
+               </div>
+            </div>
+            <button class="mostrarFormulario btn btn-success mb-5" id="mostrarFormulario">Ir a registro</button>
+         </div>
+
+         <form id="formularioRegistro" name="formularioRegistro" class="formularioRegistro needs-validation" method="POST" action="/formularioRegistro" novalidate="">        
+         <div class="container text-center">
+            <div class="row align-items-start">
+               <div class="col-lg-4 col-md-12">
+                  <label for="nombre" class="form-label">Nombre:</label>
+                  <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required="">
+                  <span class="error-message" id="nombre-error"></span>
+               </div>
+               <div class="col-lg-4 col-md-12">
+                  <label for="a_paterno" class="form-label">Apellido Paterno:</label>
+                  <input type="text" id="a_paterno" name="a_paterno" class="form-control" placeholder="Apellido Paterno" required="">
+                  <span class="error-message" id="a_paterno-error"></span>
+               </div>
+               <div class="col-lg-4 col-md-12">
+                  <label for="a_materno" class="form-label">Apellido Materno:</label>
+                  <input type="text" id="a_materno" name="a_materno" class="form-control" placeholder="Apellido Materno" required="">
+                  <span class="error-message" id="a_materno-error"></span>
+               </div>
+            </div>
+         </div>
+         <div class="container text-center">
+            <div class="row align-items-start">
+               <div class="col-lg-4 col-md-12">
+                  <label for="sexo" class="form.label">Sexo:</label>
+                  <select id="sexo" name="sexo" class="form-control" required="">
+                     <option value="" disable="" hidden=""> Seleccione </option>
+                     <option value="masculino">Masculino</option>
+                     <option value="femenino">Femenino</option>
+                  </select>
+               </div>
+               <div class="col-lg-4 col-md-12">
+                  <label for="f_nacimiento" class="form.label">Fecha de Nacimiento:</label>
+                  <input type="date" id="fechaNacimiento" name="f_nacimiento" class="form-control" oninput="calcularEdad()" required="">
+               </div>
+               <div class="col-lg-4 col-md-12">
+                  <label for="edad" class="form.label">Edad:</label>
+                  <input type="text" id="edad" name="edad" class="form-control" readonly="">
+               </div>
+            </div>
+         </div>
+         <div class="container text-center">
+            <div class="row align-items-start justify-content-center">
+               <div class="col-lg-4 col-md-12">
+                  <label for="alergia" class="form.label">¿Padece alguna alergia?</label>
+                  <select id="alergia" name="alergias" class="form-control" required="">
+                     <option value="" disable="" hidden=""> Seleccione </option>
+                     <option value="No">No</option>
+                     <option value="Sí">Sí</option>
+                  </select>
+               </div>
+               <div class="col-lg-4 col-md-12" id="especificarAlergia" style="display: none;">
+                  <label for="detalleAlergia">Especifique la alergia:</label>
+                  <input type="text" id="detalleAlergia" name="detalleAlergia" class="form-control">
+                  <span class="error-message" id="detalleAlergia-error"></span>
+               </div>
+               <div class="col-lg-4 col-md-12">
+                  <label for="email" class="form.label">Correo Electrónico:</label>
+                  <input type="email" id="email" name="email" class="form-control" placeholder="correo@example.com" required="">
+                  <span class="error-message" id="email-error"></span>
+               </div>
+            </div>
+         </div>
+         <div class="container text-center">
+            <div class="row justify-content-center">
+               <div class="col-sm-3 align-self-start">
+                  <label for="fechaVacuna">Año de última aplicación de vacuna influenza:</label>
+                  <span class="text-success">(ingresa 0 si no te la han aplicado)</span>
+                  <input type="number" id="fechaVacuna_influenza" name="fechaVacunaInfluenza" class="form-control" required="">
+                  <span class="error-message" id="influenza-error"></span>
+               </div>
+               <div class="col-sm-3 align-self-end">
+                  <label for="fechaVacuna">Año de última aplicación de vacuna contra COVID:</label>
+                  <span class="text-success">(ingresa 0 si no te la han aplicado)</span>
+                  <input type="number" id="fechaVacuna_covid" name="fechaVacunaCovid" class="form-control" required="">
+                  <span class="error-message" id="covid-error"></span>
+               </div>
+            </div>
+         </div>
+         <div class="container text-center">
+            <div class="row align-items-start">
+               <div class="col-lg-4 col-md-12">
+                  <label for="calle" class="form.label">Calle:</label>
+                  <input type="text" id="calle" name="calle" class="form-control" required="">
+               </div>
+               <div class="col-lg-4 col-md-12">
+                  <label for="numext" class="form.label">Número Exterior:</label>
+                  <input type="text" id="numext" name="numext" class="form-control" pattern="[0-9]+" title="Solo se aceptan números" required="">
+                  <span class="error-message" id="numext-error"></span>
+               </div>
+               <div class="col-lg-4 col-md-12">
+                  <label for="colonia" class="form.label">Colonia:</label>
+                  <input type="text" id="colonia" name="colonia" class="form-control" required="">
+               </div>
+            </div>
+         </div>
+         <div class="container text-center">
+            <div class="row align-items-start">
+               <div class="col-lg-4 col-md-12">
+                  <label for="municipio" class="form.label">Alcaldía/Municipio:</label>
+                  <input type="text" id="municipio" name="municipio" class="form-control" required="">
+               </div>
+               <div class="col-lg-4 col-md-12">
+                  <label for="cp" class="form.label">CP:</label>
+                  <input type="text" id="cp" name="cp" class="form-control" pattern="[0-9]+" title="Solo se aceptan números" required="">
+                  <span class="error-message" id="cp-error"></span>
+               </div>
+               <div class="col-lg-4 col-md-12">
+                  <label for="telefono" class="form.label">Teléfono:</label>
+                  <input type="tel" id="telefono" name="telefono" class="form-control" pattern="[0-9]+" title="Solo se aceptan números" required="">
+                  <span class="error-message" id="telefono-error"></span>
+               </div>
+            </div>
+         </div>
+         <br>
+         <div class="container">
+            <div class="row">
+               <div class="col">
+                  <p style="text-align: justify;"><strong> Se me ha informado que en muy raras ocasiones puede existir un problema de alergia a la aplicación o 
+                     puede aparecer una pequeña lesión en el sitio de aplicación. El personal que aplica la vacuna es profesional de la salud y está 
+                     perfectamente capacitado para la aplicación o resolución de eventos adversos.
+                     </strong>
+                  </p>
+                  <label class="checkbox-label">
+                  <input type="checkbox" name="conformidad" title="Por favor, marca esta casilla para continuar">
+                  <strong> He leído y comprendido la información proporcionada.</strong>
+                  </label>
+               </div>
+            </div>
+         </div>
+         <div class="container">
+            <div class="row">
+               <div class="col">
+                  <label class="checkbox-label">
+                  <input type="checkbox" name="conformidadVaxigrip" title="Por favor, marca esta casilla para continuar">
+                  <strong> Acepto la aplicación de la vacuna Vaxigrip tetra de Sanofi </strong>
+                  </label>
+               </div>
+            </div>
+         </div>
+         <div class="container">
+            <div class="row">
+               <div class="col">
+                  <button type="submit" id="enviarBtn" value="Enviar" class="btn btn-light-purple btn-lg font-weight-bold"></button>
+               </div>
+            </div>
+         </div>
+         </form>
+
+    <script>
+
+        document.getElementById("alergia").addEventListener("change", function () {
+            var especificarAlergia = document.getElementById("especificarAlergia");
+            var detalleAlergia = document.getElementById("detalleAlergia");
+
+            if (this.value === "Sí") {
+                especificarAlergia.style.display = "block";
+                detalleAlergia.required = true;
+            } else {
+                especificarAlergia.style.display = "none";
+                detalleAlergia.required = false;
+            }
+        });
+
+        document.getElementById("telefono").addEventListener("input", function() {
+            validarNumeros(this, 'telefono-error');
+         });
+
+         document.getElementById("cp").addEventListener("input", function() {
+            validarNumeros(this, 'cp-error');
+         });
+
+         document.getElementById("numext").addEventListener("input", function() {
+            validarNumeros(this, 'numext-error');
+         });
+
+         function validarNumeros(input, errorId) {
+            var valor = input.value;
+            var errorMessage = document.getElementById(errorId);
+
+            if (!/^[0-9]*$/.test(valor)) {
+               errorMessage.innerText = "Solo se aceptan números";
+               input.style.borderColor = "red";
+               input.value = "";
+            } else {
+               errorMessage.innerText = "";
+               input.style.borderColor = ""; 
+            }
+         }
+
+        document.getElementById("email").addEventListener("input", function () {
+            validarEmail(this, 'email-error');
+        });
+
+        function validarEmail(input, errorId) {
+               var valor = input.value;
+               var errorMessage = document.getElementById(errorId);
+
+               if (!/^\S+@\S+\.\S+$/.test(valor)) {
+                  errorMessage.innerText = "Correo electrónico inválido";
+                  input.style.borderColor = "red";
+               } else {
+                  errorMessage.innerText = "";
+                  input.style.borderColor = ""; 
+               }
+         }
+
+         function validarNombreApellido(input, errorId) {
+            const valor = input.value.trim();
+            const regex = /^[A-Za-zÁÉÍÓÚáéíóúñÑ']+([ ]?[a-zA-ZÁÉÍÓÚáéíóúñÑ']+)*$/;
+            const errorMessage = document.getElementById(errorId);
+
+            if (!regex.test(valor)) {
+               input.style.borderColor = "red";
+               errorMessage.innerText = "Ingresa un nombre válido";
+            } else {
+               input.style.borderColor = "";
+               errorMessage.innerText = "";
+            }
+         }
+
+
+         const nombreInput = document.getElementById('nombre');
+         const aPaternoInput = document.getElementById('a_paterno');
+         const aMaternoInput = document.getElementById('a_materno');
+
+         // Event listeners para validar los campos al perder el foco
+         nombreInput.addEventListener('blur', function() {
+            validarNombreApellido(this, 'nombre-error');
+         });
+
+         aPaternoInput.addEventListener('blur', function() {
+            validarNombreApellido(this, 'a_paterno-error');
+         });
+
+         aMaternoInput.addEventListener('blur', function() {
+            validarNombreApellido(this, 'a_materno-error');
+         });
+
+
+         function validarFecha(input, errorId) {
+            const valor = input.valueAsNumber;
+            const errorMessage = document.getElementById(errorId);
+
+            if (valor !== 0 && (valor < 2000 || valor > 2040 || isNaN(valor))) {
+                  errorMessage.textContent = "Ingresa un año entre 2000 y 2024";
+                  input.style.borderColor = "red";
+            } else {
+                  errorMessage.textContent = "";
+                  input.style.borderColor = ""; 
+            }
+
+         }
+
+         const fechaVacunaInfluenzaInput = document.getElementById('fechaVacuna_influenza');
+         const fechaVacunaCovidInput = document.getElementById('fechaVacuna_covid');
+
+         fechaVacunaInfluenzaInput.addEventListener('blur', function() {
+            validarFecha(this, 'influenza-error');
+         });
+         fechaVacunaCovidInput.addEventListener('blur', function() {
+            validarFecha(this, 'covid-error');
+         });
+
+
+            // Obtener los checkboxes y las filas
+         const checkboxInfluenza = document.getElementById('m_vacInfluenza');
+         const checkboxCovid = document.getElementById('m_vacSARS');
+         const rowInfluenza = document.getElementById('influenza');
+         const rowCovid = document.getElementById('covid');
+
+         const formularioRegistro = document.getElementById('formularioRegistro');
+         const mostrarFormulario = document.getElementById('mostrarFormulario');
+
+         // Ocultar ambas filas inicialmente
+         rowInfluenza.classList.remove('active');
+         rowCovid.classList.remove('active');
+         formularioRegistro.classList.remove('active');
+
+         // Función para mostrar/ocultar la fila según el checkbox seleccionado
+         checkboxInfluenza.addEventListener('change', function() {
+         if (this.checked) {
+            rowInfluenza.classList.add('active'); // Mostrar la fila de influenza
+            if (!checkboxCovid.checked) {
+               rowCovid.classList.remove('active'); // Ocultar la fila de COVID-19 solo si no está activado
+            }
+         } else {
+            rowInfluenza.classList.remove('active'); // Ocultar la fila de influenza si el checkbox está desmarcado
+         }
+         });
+
+         checkboxCovid.addEventListener('change', function() {
+         if (this.checked) {
+            rowCovid.classList.add('active'); // Mostrar la fila de COVID-19
+            if (!checkboxInfluenza.checked) {
+               rowInfluenza.classList.remove('active'); // Ocultar la fila de influenza solo si no está activado
+            }
+         } else {
+            rowCovid.classList.remove('active'); // Ocultar la fila de COVID-19 si el checkbox está desmarcado
+         }
+         });
+
+         mostrarFormulario.addEventListener('click', function() {
+            if (!checkboxInfluenza.checked && !checkboxCovid.checked) {
+                  alert('Por favor, selecciona al menos una vacuna.');
+                  return;
+            }
+
+            formularioRegistro.classList.add('active');
+         });
+
+
+    </script>
+   <script>
+
+      document.getElementById('enviarBtn').addEventListener('click', function(event) {
+         event.preventDefault();
+
+         const conformidadCheckbox = document.querySelector('input[name="conformidad"]');
+         const conformidadVaxigripCheckbox = document.querySelector('input[name="conformidadVaxigrip"]');
+         const form = document.getElementById('formularioRegistro');
+         const errores = document.querySelectorAll('.error-message');
+         
+         let hayErrores = false;
+         errores.forEach(error => {
+            if (error.innerText !== '') {
+                  hayErrores = true;
+            }
+         });
+
+         if (!conformidadCheckbox.checked || !conformidadVaxigripCheckbox.checked || hayErrores || !form.checkValidity()) {
+            alert('Por favor, marca ambos términos y verifica los errores para continuar.');
+         } else {
+            const data = {};
+
+            data.nombre = document.querySelector('input[name="nombre"]').value;
+            data.a_paterno = document.querySelector('input[name="a_paterno"]').value;
+            data.a_materno = document.querySelector('input[name="a_materno"]').value;
+            data.sexo = document.querySelector('select[name="sexo"]').value;
+            data.f_nacimiento = document.querySelector('input[name="f_nacimiento"]').value;
+            data.edad = document.querySelector('input[name="edad"]').value;
+            data.alergias = document.querySelector('select[name="alergias"]').value;
+            
+            data.detalleAlergia = '';
+
+            if (data.alergias === 'No') {
+               data.detalleAlergia = 'Ninguna';
+            } else {
+               const detalleAlergiaInput = document.getElementById('detalleAlergia');
+               data.detalleAlergia = detalleAlergiaInput.value;
+            }
+
+            data.email = document.querySelector('input[name="email"]').value;
+            data.fechaVacunaInfluenza = document.querySelector('input[name="fechaVacunaInfluenza"]').value;
+            data.fechaVacunaCovid = document.querySelector('input[name="fechaVacunaCovid"]').value;
+            data.calle = document.querySelector('input[name="calle"]').value;
+            data.numext = document.querySelector('input[name="numext"]').value;
+            data.colonia = document.querySelector('input[name="colonia"]').value;
+            data.municipio = document.querySelector('input[name="municipio"]').value;
+            data.cp = document.querySelector('input[name="cp"]').value;
+            data.telefono = document.querySelector('input[name="telefono"]').value;
+
+            const vacunaCovidCheckbox = document.getElementById('m_vacSARS');
+            data.aplicaVacunaCovid = vacunaCovidCheckbox.checked ? 'Aplica' : 'No aplica';
+
+            const vacunaInfluenzaCheckbox = document.getElementById('m_vacInfluenza');
+            data.aplicaVacunaInfluenza = vacunaInfluenzaCheckbox.checked ? 'Aplica' : 'No aplica';
+            
+            console.log(data)
+            // Enviar los datos a través de fetch
+            fetch('/formularioRegistro', {
+                  method: 'POST',
+                  headers: {
+                     'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(data)
+            })
+            .then(response => {
+                  return response.json();
+            })
+            .then(data => {
+               // Extracción del nombre del JSON
+               const nombre = data.nombre;
+
+               // Redirección a la página de agradecimiento con el nombre
+               window.location.href = `/gracias_registro/${nombre}`;
+               console.log(window.location.hrefwindow.location.href)
+            })
+         }
+      });
+
+
+   </script>
+    <script>
+        function calcularEdad() {
+            var fechaNacimiento = document.getElementById('fechaNacimiento').value;
+            var fechaNacimientoObj = new Date(fechaNacimiento);
+            var fechaActual = new Date();
+
+            var edadEnMilisegundos = fechaActual - fechaNacimientoObj;
+            var edadEnAnios = Math.floor(edadEnMilisegundos / (365.25 * 24 * 60 * 60 * 1000));
+
+            document.getElementById('edad').value = edadEnAnios;
+        }
+    </script>
+
+    <script>
+            (function () {
+         'use strict';
+
+         var forms = document.querySelectorAll('.needs-validation');
+
+         Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                  if (!form.checkValidity()) {
+                     event.preventDefault();
+                     event.stopPropagation();
+                  } else {
+                     var conformidadCheckbox = document.querySelector('input[name="conformidad"]');
+                     var conformidadVaxigripCheckbox = document.querySelector('input[name="conformidadVaxigrip"]');
+                     
+                     if (!conformidadCheckbox.checked || !conformidadVaxigripCheckbox.checked) {
+                        event.preventDefault();
+                        alert('Debes aceptar ambas condiciones y llenar el formulario completo.');
+                     }
+                  }
+
+                  form.classList.add('was-validated');
+            }, false);
+         });
+      })();
+    </script>
+    </body>
+</html>

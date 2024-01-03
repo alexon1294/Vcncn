@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table</title>
+    <!-- Bootstrap-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <!-- DataTable -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/scss/tableStyle.css') }}" />
+</head>
+<body>
+    <div class="container">
+        <div class="principal">
+            <div class="section">
+                <img class="img-fluid" src="{{ url_for('static', filename='img/logo.png') }}" alt="">
+                <a class="cerrar-sesion btn btn-danger" href="/logout">Cerrar sesión</a>
+            </div>
+            <div class="h1 mb-4">
+                <h1>Registro de vacunación</h1>
+            </div>
+        </div>
+        <!-- Mensajes de éxito -->
+        {% with success_messages = get_flashed_messages(category_filter=['update-cell-success']) %}
+        {% if success_messages %}
+            <div class="alert alert-success">
+                    <strong>{% for message in success_messages %}
+                        {{ message }}
+                    {% endfor %}</strong>            
+            </div>
+        {% endif %}
+        {% endwith %}
+
+        <!-- Mensajes de error -->
+        {% with error_messages = get_flashed_messages(category_filter=['update-cell-error']) %}
+            {% if error_messages %}
+                <div class="alert alert-danger">
+                    <strong>{% for message in error_messages %}
+                            {{ message }}
+                        {% endfor %}</strong>
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% if comprobante == False %}
+            alert('¡Error al generar el comprobante!');
+        {% endif %}
+        <main class="container-fluid">
+            <!-- Mensajes de éxito para crear -->
+            {% with success_create_messages = get_flashed_messages(category_filter=['creado-success']) %}
+            {% if success_create_messages %}
+                <div class="alert alert-success">
+                    <strong>
+                        {% for message in success_create_messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </strong>
+                </div>
+            {% endif %}
+            {% endwith %}
+
+            <!-- Mensajes de error para crear -->
+            {% with error_create_messages = get_flashed_messages(category_filter=['creado-error']) %}
+            {% if error_create_messages %}
+                <div class="alert alert-danger">
+                    <strong>
+                        {% for message in error_create_messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </strong>
+                </div>
+            {% endif %}
+            {% endwith %}
+            <div class="lotes-aplicantes">
+                <div class="lotes mb-3">
+                    <input class="lote__input form-control" type="text" id="nuevo-lote" placeholder="Ingresa un nuevo lote.">
+                    <select class="lote__select form-select" id="lote" name="opciones">
+                        {% for lote in lotes %}
+                            <option value="{{ lote.id_lote }}">{{ lote.numero_lote }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-success" onclick=agregarOpcionLote()>Agregar Opción</button>
+                    <button class="btn btn-danger" onclick=borrarOpcionLote()>Borrar Opción</button>
+                </div>
+                <!-- <div class="lotes lotes-covid mb-3">
+                    <input class="lote-covid__input form-control" type="text" id="nuevo-lote-covid" placeholder="Ingresa un nuevo lote de vacuna COVID.">
+                    <select class="lote-covid__select form-select" id="lote-covid" name="opciones">
+                        {% for lote_covid in lotes_covid %}
+                            <option value="{{ lote_covid.id_lote }}">{{ lote_covid.numero_lote }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-success" onclick="agregarOpcionLoteCovid()">Agregar Opción</button>
+                    <button class="btn btn-danger" onclick="borrarOpcionLoteCovid()">Borrar Opción</button>
+                </div> -->
+
+                <div class="aplicantes mb-3">
+                    <input class="aplicantes__input form-control" type="text" id="nuevo-aplicante" placeholder="Ingresa nuev@ aplicante.">
+                    <select class="aplicantes__select form-select" id="nombre-aplicante" name="opciones">
+                        {% for aplicante in aplicantes %}
+                            <option value="{{ aplicante.id_aplicante }}">{{ aplicante.nombre_completo_aplicante }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-success" onclick=agregarOpcionAplicante()>Agregar Opción</button>
+                    <button class="btn btn-danger" onclick=borrarOpcionAplicante()>Borrar Opción</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <div class="dataTables_wrapper dt-bootstrap5 no-footer">
+                    <table class="table dataTable no-footer table-responsive table-striped table-dark table-bordered table-hover" id="datatable_users">
+                        <caption>Tabla de registros</caption>
+                        <thead>
+                            <tr class="table-primary">
+                                <th class="">NUM DE REGISTRO</th>
+                                <th class="">COMPROBANTE</th>
+                                <th class="">MODIFICAR</th>
+                                <th class="">FECHA_HORA_REGISTRO</th>
+                                <th>VACUNA_SARS_COV2</th>
+                                <th>VACUNA_INFLUENZA_VAXIGRIP</th>
+                                <th>FECHA_EMISION_COMPROBANTE</th>
+                                <th>NOMBRE_APLICANTE</th>
+                                <th>LOTE</th>
+                                <th class="">NOMBRE</th>
+                                <th class="">A_PATERNO</th>
+                                <th class="">A_MATERNO</th>
+                                <th class="">F_NACIMIENTO</th>
+                                <th class="">EDAD</th>
+                                <th class="">SEXO</th>
+                                <th class="">ALERGIAS</th>
+                                <th class="">ALERGIA_ESPECIFICA</th>
+                                <th class="">FECHA_ULTIMA_VAC_COVID</th>
+                                <th class="">FECHA_ULTIMA_VAC_INFLUENZA</th>
+                                <th class="">CONFORMIDAD</th>
+                                <th class="">CONFORMIDAD_VAXIGRIP</th>
+                                <th class="">TELEFONO</th>
+                                <th class="">EMAIL</th>
+                                <th class="">CALLE</th>
+                                <th class="">NUM_EXT</th>
+                                <th class="">COLONIA</th>
+                                <th class="">ALCALDIA</th>
+                                <th class="">CP</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+        
+        <div class="file-panel glass">
+            <form class="form" method="POST" action="/upload_excel" enctype="multipart/form-data">
+                <label class="form-label" for="formFile" ><strong>Panel de archivos Excel</strong></label>
+                <input class="form-control" id="formFile" type="file" name="archivo">
+                <button class="btn btn-subir btn-success">Subir</button>
+                <!-- Mensajes de éxito -->
+                {% with success_messages = get_flashed_messages(category_filter=['success']) %}
+                {% if success_messages %}
+                    <div class="alert alert-success">
+                            {% for message in success_messages %}
+                                {{ message }}
+                            {% endfor %}            
+                    </div>
+                {% endif %}
+                {% endwith %}
+
+                <!-- Mensajes de error -->
+                {% with error_messages = get_flashed_messages(category_filter=['error']) %}
+                    {% if error_messages %}
+                        <div class="alert alert-danger">
+                                {% for message in error_messages %}
+                                    {{ message }}
+                                {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <!-- Mensajes de warning -->
+                {% with error_messages = get_flashed_messages(category_filter=['warning']) %}
+                    {% if error_messages %}
+                        <div class="alert alert-warning">
+                                {% for message in error_messages %}
+                                    {{ message }}
+                                {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            </form>
+            <div class="files" id="loadedFilesPanel">
+                {% for file in loaded_files %}
+                <div class="file-item">
+                    <div class="icon-file-name">
+                        <i class="fas fa-file-excel fa-2x ms-1 text-success"></i>
+                        <span class="text-success">{{ file }}</span>
+                    </div>
+                    <div class="delete-generate-excel">
+                        <form method="POST" action="/delete_excel">
+                            <input type="hidden" name="file_name" value="{{ file }}">
+                            <button class="btn btn-danger" type="submit">Eliminar</button>
+                        </form>
+                        <form class="generate-table" method="POST" action="/generate_table">
+                            <input type="hidden" name="file_name" value="{{ file }}">
+                            <button class="btn btn-primary" type="submit">Generar Tabla</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- Mensajes de éxito -->
+                {% with success_messages = get_flashed_messages(category_filter=['success-deleteGenerate']) %}
+                {% if success_messages %}
+                    <div class="alert alert-success">
+                            {% for message in success_messages %}
+                                {{ message }}
+                            {% endfor %}            
+                    </div>
+                {% endif %}
+                {% endwith %}
+
+                <!-- Mensajes de error -->
+                {% with error_messages = get_flashed_messages(category_filter=['error-deleteGenerate']) %}
+                    {% if error_messages %}
+                        <div class="alert alert-danger">
+                                {% for message in error_messages %}
+                                    {{ message }}
+                                {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- DataTable -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js" ></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHvegtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js" integrity="sha512-dlPw+ytv/6JyepmelABrgeYgHI0O+frEwgfnPdXDTOIZz+eDgfW07QXG02/O8COfivBdGNINy+Vex+lYmJ5rxw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='../static/js/table.js') }}"></script>
+</body>
+</html>
+
+
+
+
+
+
